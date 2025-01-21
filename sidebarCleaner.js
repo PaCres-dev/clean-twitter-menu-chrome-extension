@@ -12,6 +12,7 @@ const deleteSidebarUselessItems = () => {
     "Grok",
     "Jobs",
     "Communities",
+    "Business",
     "Premium",
     "Verified Orgs",
   ];
@@ -46,10 +47,20 @@ const deletePremiumAds = () => {
   });
 };
 
+const deleteGrokButton = () => {
+  const grokButtons = document.querySelectorAll("[data-testid='GrokDrawer']");
+
+  grokButtons.forEach((grokButton) => {
+    console.log(`Deleted: Grok button`);
+    grokButton.parentNode.remove();
+  });
+};
+
 function removeSidebarItems() {
   const observer = new MutationObserver(() => {
     deleteSidebarUselessItems();
     deletePremiumAds();
+    deleteGrokButton();
   });
 
   observer.observe(document.body, { childList: true, subtree: true });
