@@ -1,7 +1,5 @@
 const deleteSidebarUselessItems = () => {
-  const twitterSidebar = document.querySelector(
-    "nav[aria-label='Primary'][role='navigation']"
-  );
+  const twitterSidebar = document.querySelector("nav[aria-label='Primary'][role='navigation']");
 
   if (!twitterSidebar) {
     console.log("No sidebar found");
@@ -17,17 +15,13 @@ const deleteSidebarUselessItems = () => {
     "Verified Orgs",
   ];
 
-  const sidebarItems = twitterSidebar.children;
+  const sidebarItems = Array.from(twitterSidebar.children);
 
   for (const sidebarItem of sidebarItems) {
-    const matchingItem = Array.from(sidebarItem.querySelectorAll("*")).find(
-      (descendant) => {
-        const text = descendant.textContent.trim().toLowerCase();
-        return sidebarItemsToRemove.some((word) =>
-          text.includes(word.toLowerCase())
-        );
-      }
-    );
+    const matchingItem = Array.from(sidebarItem.querySelectorAll("*")).find((descendant) => {
+      const text = descendant.textContent?.trim().toLowerCase();
+      return sidebarItemsToRemove.some((word) => text.includes(word.toLowerCase()));
+    });
 
     if (matchingItem) {
       console.log(`Deleted: ${sidebarItem.textContent}`);
@@ -37,9 +31,7 @@ const deleteSidebarUselessItems = () => {
 };
 
 const deletePremiumAds = () => {
-  const premiumAds = document.querySelectorAll(
-    "[aria-label='Subscribe to Premium']"
-  );
+  const premiumAds = document.querySelectorAll("[aria-label='Subscribe to Premium']");
 
   premiumAds.forEach((ad) => {
     console.log(`Deleted: Premium ad`);
@@ -57,13 +49,13 @@ const deleteGrokButton = () => {
 };
 
 function removeSidebarItems() {
-  const observer = new MutationObserver(() => {
+  console.log("Removing sidebar items");
+
+  setTimeout(() => {
     deleteSidebarUselessItems();
     deletePremiumAds();
     deleteGrokButton();
-  });
-
-  observer.observe(document.body, { childList: true, subtree: true });
+  }, 1000);
 }
 
 removeSidebarItems();
